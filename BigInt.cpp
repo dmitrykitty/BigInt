@@ -10,7 +10,7 @@ BigInt::BigInt(long long other) {
     digits_.clear();
     unsigned long long tmp;
     if (other < 0) {
-        isNegative = true;
+        isNegative_ = true;
         tmp = std::abs(other);
     } else {
         tmp = other;
@@ -27,7 +27,7 @@ BigInt::BigInt(const std::string& other) {
     std::string tmp = other;
 
     if (other[0] == '-') {
-        isNegative = true;
+        isNegative_ = true;
         tmp.erase(tmp.begin());
     }
 
@@ -54,7 +54,7 @@ BigInt::BigInt(const std::string& other) {
 
 std::string BigInt::toString() const {
     std::string res;
-    if (isNegative)
+    if (isNegative_)
         res = "-";
 
     for (auto it = digits_.rbegin(); it != digits_.rend(); ++it) {
@@ -76,3 +76,39 @@ std::istream& operator>>(std::istream& is, BigInt& other) {
     other = BigInt(tmp);
     return is;
 }
+
+void BigInt::swap(BigInt& other) {
+    std::swap(isNegative_, other.isNegative_);
+    std::swap(digits_, other.digits_);
+}
+
+BigInt& BigInt::operator=(BigInt other) {
+    swap(other);
+    return *this;
+}
+
+int BigInt::absCompare(const BigInt& other) const {
+    if (digits_.size() != other.digits_.size())
+        return digits_.size() > other.digits_.size() ? 1 : -1;
+
+    for (int i = 0; i < digits_.size(); ++i) {
+        if (digits_[i] != other.digits_[i])
+            return digits_[i] > other.digits_[i] ? 1 : -1;
+    }
+    return 0;
+}
+
+std::strong_ordering BigInt::operator<=>(const BigInt& other) const {
+    if (isNegative_ != other.isNegative_) {
+        return isNegative_
+                   ? std::strong_ordering::less
+                   : std::strong_ordering::greater;
+    }
+
+    int res = absCompare(other);
+    if (res == 0)
+        return std::strong_ordering::equal;
+
+}
+
+BigInt BigInt::operator+(const BigInt& other) {}

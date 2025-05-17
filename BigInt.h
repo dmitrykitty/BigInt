@@ -10,7 +10,7 @@ class BigInt {
     static constexpr int BASE = 1'000'000'000;
     static constexpr int MAX_DIGITS = 9;
     std::vector<int> digits_{0};
-    bool isNegative{false};
+    bool isNegative_{false};
 
 public:
     //Constructors
@@ -22,6 +22,15 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const BigInt& other);
     friend std::istream& operator>>(std::istream& is, BigInt& other);
+
+    BigInt& operator=(BigInt other);
+    std::strong_ordering operator<=>(const BigInt& other) const;
+
+    BigInt operator+(const BigInt& other);
+
+private:
+    void swap(BigInt& other);
+    int absCompare(const BigInt& other) const;
 };
 
 
