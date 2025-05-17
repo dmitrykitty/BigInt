@@ -1,0 +1,8 @@
+# ninja log v6
+10	694	7691774178373600	CMakeFiles/BigInt.dir/bigint.cpp.obj	350901517f76a89
+5	690	7691774178322973	CMakeFiles/BigInt.dir/main.cpp.obj	8469b050ca8741dc
+694	809	7691774185218449	BigInt.exe	b991bb34fa4f3183
+2	244	7691781675587423	build.ninja	7d5f17f1c5028824
+4	663	7691781675862523	CMakeFiles/BigInt.dir/main.cpp.obj	8469b050ca8741dc
+8	682	7691781675892519	CMakeFiles/BigInt.dir/BigInt.cpp.obj	8c9238fcb0907dcd
+682	800	7691781682635004	BigInt.exe	ddac2476c7aef9b9

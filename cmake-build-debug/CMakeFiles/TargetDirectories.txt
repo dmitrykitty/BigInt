@@ -1,0 +1,3 @@
+D:/study/AGH/C_plus_projects/BigInt/cmake-build-debug/CMakeFiles/BigInt.dir
+D:/study/AGH/C_plus_projects/BigInt/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/study/AGH/C_plus_projects/BigInt/cmake-build-debug/CMakeFiles/rebuild_cache.dir
