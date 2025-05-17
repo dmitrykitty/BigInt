@@ -51,6 +51,14 @@ BigInt::BigInt(const std::string& other) {
         digits_.push_back(std::stoi(tmp.substr(0, firstNChars)));
 }
 
+BigInt::BigInt(const BigInt& other) {
+    digits_.reserve(other.digits_.size());
+    for (int i = 0; i < digits_.size(); ++i)
+        digits_[i] = other.digits_[i];
+
+    isNegative_ = other.isNegative_;
+}
+
 
 std::string BigInt::toString() const {
     std::string res;
@@ -91,7 +99,7 @@ int BigInt::absCompare(const BigInt& other) const {
     if (digits_.size() != other.digits_.size())
         return digits_.size() > other.digits_.size() ? 1 : -1;
 
-    for (int i = 0; i < digits_.size(); ++i) {
+    for (int i = digits_.size() - 1; i >= 0 ; --i) {
         if (digits_[i] != other.digits_[i])
             return digits_[i] > other.digits_[i] ? 1 : -1;
     }
@@ -109,6 +117,18 @@ std::strong_ordering BigInt::operator<=>(const BigInt& other) const {
     if (res == 0)
         return std::strong_ordering::equal;
 
+    if (!isNegative_)
+        return res < 0
+                   ? std::strong_ordering::less
+                   : std::strong_ordering::greater;
+
+    return res < 0
+               ? std::strong_ordering::greater
+               : std::strong_ordering::less;
+}
+
+bool BigInt::operator==(const BigInt& other) const {
+    return *this <=> other == std::strong_ordering::equal;
 }
 
 BigInt BigInt::operator+(const BigInt& other) {}

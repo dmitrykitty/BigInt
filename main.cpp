@@ -10,7 +10,8 @@ int main() {
 
 
     BigInt bn2("-987654123456789123456789123456789");
-    std::cout << bn2.toString() << std::endl;
+
+    std::cout << static_cast<int>(bn2 >  bn1);
 
     BigInt bn3;
     std::cin >> bn3;

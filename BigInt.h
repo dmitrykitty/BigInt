@@ -17,6 +17,7 @@ public:
     BigInt() = default;
     BigInt(long long other);
     BigInt(const std::string& other);
+    BigInt(const BigInt& other);
 
     [[nodiscard]] std::string toString() const;
 
@@ -25,6 +26,7 @@ public:
 
     BigInt& operator=(BigInt other);
     std::strong_ordering operator<=>(const BigInt& other) const;
+    bool operator==(const BigInt& other) const;
 
     BigInt operator+(const BigInt& other);
 
