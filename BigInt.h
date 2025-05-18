@@ -28,11 +28,14 @@ public:
     std::strong_ordering operator<=>(const BigInt& other) const;
     bool operator==(const BigInt& other) const;
 
+    BigInt& operator+=(const BigInt& other);
+
     BigInt operator+(const BigInt& other);
 
 private:
     void swap(BigInt& other);
     int absCompare(const BigInt& other) const;
+    void absSum(const BigInt& other);
 };
 
 

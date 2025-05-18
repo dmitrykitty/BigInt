@@ -99,7 +99,7 @@ int BigInt::absCompare(const BigInt& other) const {
     if (digits_.size() != other.digits_.size())
         return digits_.size() > other.digits_.size() ? 1 : -1;
 
-    for (int i = digits_.size() - 1; i >= 0 ; --i) {
+    for (int i = digits_.size() - 1; i >= 0; --i) {
         if (digits_[i] != other.digits_[i])
             return digits_[i] > other.digits_[i] ? 1 : -1;
     }
@@ -129,6 +129,41 @@ std::strong_ordering BigInt::operator<=>(const BigInt& other) const {
 
 bool BigInt::operator==(const BigInt& other) const {
     return *this <=> other == std::strong_ordering::equal;
+}
+
+void BigInt::absSum(const BigInt& other) {
+    long long carry = 0;
+    size_t len1 = digits_.size();
+    size_t len2 = other.digits_.size();
+    size_t max_length = std::max(len1, len2);
+    std::vector<int> result(max_length);
+
+    for (size_t i = 0; i < max_length; ++i) {
+        long long sum = carry
+                  + (i < len1 ? digits_[i] : 0)
+                  + (i < len2 ? other.digits_[i] : 0);
+
+        if (sum >= BASE) {
+            result[i] = static_cast<int>(sum % BASE);
+            carry = sum / BASE;
+        } else {
+            result[i] = sum;
+            carry = 0;
+        }
+    }
+    if (carry) {
+        result.push_back(carry);
+    }
+    digits_ = std::move(result);
+}
+
+
+
+BigInt& BigInt::operator+=(const BigInt& other) {
+    if (isNegative_ == other.isNegative_) {
+        absSum(other);
+        return *this;
+    }
 }
 
 BigInt BigInt::operator+(const BigInt& other) {}
