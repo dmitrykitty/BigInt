@@ -33,9 +33,10 @@ public:
     BigInt operator+(const BigInt& other);
 
 private:
-    void swap(BigInt& other);
-    int absCompare(const BigInt& other) const;
+    void swap(BigInt& other) noexcept;
+    [[nodiscard]] int absCompare(const BigInt& other) const;
     void absSum(const BigInt& other);
+    void absSubtract(const BigInt& other);
 };
 
 

@@ -85,14 +85,14 @@ std::istream& operator>>(std::istream& is, BigInt& other) {
     return is;
 }
 
-void BigInt::swap(BigInt& other) {
-    std::swap(isNegative_, other.isNegative_);
-    std::swap(digits_, other.digits_);
-}
-
 BigInt& BigInt::operator=(BigInt other) {
     swap(other);
     return *this;
+}
+
+void BigInt::swap(BigInt& other) noexcept {
+    std::swap(isNegative_, other.isNegative_);
+    std::swap(digits_, other.digits_);
 }
 
 int BigInt::absCompare(const BigInt& other) const {
@@ -138,10 +138,10 @@ void BigInt::absSum(const BigInt& other) {
     size_t max_length = std::max(len1, len2);
     std::vector<int> result(max_length);
 
-    for (size_t i = 0; i < max_length; ++i) {
+    for (int i = 0; i < max_length; ++i) {
         long long sum = carry
-                  + (i < len1 ? digits_[i] : 0)
-                  + (i < len2 ? other.digits_[i] : 0);
+                        + (i < len1 ? digits_[i] : 0)
+                        + (i < len2 ? other.digits_[i] : 0);
 
         if (sum >= BASE) {
             result[i] = static_cast<int>(sum % BASE);
@@ -157,6 +157,26 @@ void BigInt::absSum(const BigInt& other) {
     digits_ = std::move(result);
 }
 
+void BigInt::absSubtract(const BigInt& other) {
+    long long borrow = 0;
+    size_t len1 = digits_.size();
+    size_t len2 = other.digits_.size();
+    size_t max_length = std::max(len1, len2);
+    std::vector<int> result(max_length);
+
+    for (int i = 0; i < max_length - 1; ++i) {
+        long long difference = (i < len1 ? digits_[i] : 0) - (i < len2 ? other.digits_[i] : 0);
+
+            result[i] = difference
+            carry = sum / BASE;
+        } else {
+            result[i] = sum;
+            carry = 0;
+        }
+    }
+
+    if (*this > other) {}
+}
 
 
 BigInt& BigInt::operator+=(const BigInt& other) {
